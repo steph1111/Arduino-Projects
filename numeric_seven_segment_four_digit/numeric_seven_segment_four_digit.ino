@@ -5,7 +5,7 @@ int D = 5;
 int E = 6;
 int F = 7;
 int G = 8;
-int DP = 9;
+int buzz = 9;
 int D4 = 10;
 int D3 = 11;
 int D2 = 12;
@@ -19,11 +19,12 @@ void setup () {
   pinMode(E, OUTPUT);
   pinMode(F, OUTPUT);
   pinMode(G, OUTPUT);
-  pinMode(DP, OUTPUT);
+  pinMode(buzz, OUTPUT);
   pinMode(D4, OUTPUT);
   pinMode(D3, OUTPUT);
   pinMode(D2, OUTPUT);
   pinMode(D1, OUTPUT);
+
   digitalWrite(D1, HIGH);
   digitalWrite(D2, HIGH);
   digitalWrite(D3, HIGH);
@@ -31,7 +32,16 @@ void setup () {
 }
 
 void loop() {
-  display_number(2023);
+  digitalWrite(buzz, LOW);
+  uint32_t period = 1000;
+  for (int i = 10; i > 0; i--) {
+    for( uint32_t tStart = millis();  (millis()-tStart) < period;  ){
+      display_number(i); 
+    }
+  }
+  for( uint32_t tStart = millis();  (millis()-tStart) < period;  ){
+    digitalWrite(buzz, HIGH);
+  }
 }
 
 void display_number(int num) {
@@ -103,7 +113,6 @@ void clear_display() {
   digitalWrite(E, LOW);
   digitalWrite(F, LOW);
   digitalWrite(G, LOW);
-  digitalWrite(DP, LOW);
 }
 
 void zero() {
